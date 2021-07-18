@@ -1,0 +1,63 @@
+name: clash-calculator
+version: 0.1.0
+category: hardware, game
+
+dependencies:
+  - base
+  - clash-prelude
+  - ghc-typelits-natnormalise
+  - ghc-typelits-extra
+  - ghc-typelits-knownnat
+
+  - retroclash-lib
+  - retroclash-sim
+  - clash-shake
+
+  - QuickCheck
+  
+  - mtl
+  - extra
+  - terminal
+
+source-dirs:
+  - src
+
+ghc-options:
+  -fexpose-all-unfoldings -fno-worker-wrapper
+  -fplugin GHC.TypeLits.KnownNat.Solver
+  -fplugin GHC.TypeLits.Normalise
+  -fplugin GHC.TypeLits.Extra.Solver
+
+
+default-extensions:
+  - BinaryLiterals
+  - ConstraintKinds
+  - DataKinds
+  - DeriveAnyClass
+  - DeriveGeneric
+  - DeriveLift
+  - DerivingStrategies
+  - ExplicitForAll
+  - ExplicitNamespaces
+  - FlexibleContexts
+  - FlexibleInstances
+  - KindSignatures
+  - MagicHash
+  - MonoLocalBinds
+  - NoImplicitPrelude
+  - NoMonomorphismRestriction
+  - NoStarIsType
+  - NoStrictData
+  - NoStrict
+  - QuasiQuotes
+  - ScopedTypeVariables
+  - TemplateHaskellQuotes
+  - TemplateHaskell
+  - TypeApplications
+  - TypeFamilies
+  - TypeInType
+  - TypeOperators
+
+executables:
+  calculator:
+    main: Calculator.IO
