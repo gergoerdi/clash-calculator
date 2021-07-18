@@ -1,6 +1,6 @@
 module Calculator.IO where
 
-import Prelude
+import Clash.Prelude
 import Calculator.State
 import System.Terminal
 import Control.Monad ((<=<))
