@@ -16,13 +16,15 @@ import Calculator.Serial
 import Calculator.Keypad
 import qualified Data.List as L
 
+createDomain vSystem{vName="Native", vPeriod = hzToPeriod __NATIVE_CLOCK__}
+
 topEntity
-    :: "CLK" ::: Clock System
-    -> "RX" ::: Signal System Bit
-    -> "ROWS" ::: Signal System (Vec 4 (Active Low))
-    -> ( "TX" ::: Signal System Bit
-       , "SS" ::: Signal System (SevenSegment 4 Low Low Low)
-       , "COLS" ::: Signal System (Vec 4 (Active Low))
+    :: "CLK" ::: Clock Native
+    -> "RX" ::: Signal Native Bit
+    -> "ROWS" ::: Signal Native (Vec 4 (Active Low))
+    -> ( "TX" ::: Signal Native Bit
+       , "SS" ::: Signal Native (SevenSegment 4 Low Low Low)
+       , "COLS" ::: Signal Native (Vec 4 (Active Low))
        )
 topEntity = withResetEnableGen board
   where

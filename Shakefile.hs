@@ -1,10 +1,16 @@
-{-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE RecordWildCards, NumericUnderscores #-}
 import Clash.Shake
 import Clash.Shake.Xilinx
 
 import Development.Shake
 import Development.Shake.FilePath
 import Data.Foldable (forM_)
+
+targets =
+    [ ("nexys-a7-50t", xilinxVivado nexysA750T, 100_000_000)
+    , ("papilio-pro",  xilinxISE papilioPro,     32_000_000)
+    , ("papilio-one",  xilinxISE papilioOne,     32_000_000)
+    ]
 
 outDir :: FilePath
 outDir = "_build"
@@ -17,23 +23,20 @@ main = shakeArgs shakeOptions{ shakeFiles = outDir } $ do
         putNormal $ "Cleaning files in " <> outDir
         removeFilesAfter outDir [ "//*" ]
 
-    kit@ClashKit{..} <- clashRules (outDir </> "clash") Verilog
-        [ "src" ]
-        "Calculator"
-        [ "-Wno-partial-type-signatures"
-        , "-fclash-intwidth=32" -- To play nicely with Spartan 3 and 6
-        ] $
-        return ()
-    phony "clashi" $ clash ["--interactive", "src/Calculator.hs"]
+    forM_ targets $ \(name, synth, clock) -> do
+        let targetDir = outDir </> name
 
-    let targets =
-            [ ("nexys-a7-50t", xilinxVivado nexysA750T)
-            -- , ("papilio-pro", xilinxISE papilioPro)
-            -- , ("papilio-one", xilinxISE papilioOne)
-            ]
-
-    forM_ targets $ \(name, synth) -> do
-        SynthKit{..} <- synth kit (outDir </> name) ("target" </> name) "Top"
+        kit@ClashKit{..} <- clashRules (targetDir </> "clash") Verilog
+            [ "src" ]
+            "Calculator"
+            [ "-Wno-partial-type-signatures"
+            , "-Wunused-imports"
+            , "-D__NATIVE_CLOCK__=" <> show clock
+            ] $
+            return ()
+        SynthKit{..} <- synth kit (targetDir </> "synth") ("target" </> name) "Top"
 
         mapM_ (uncurry $ nestedPhony name) $
-          ("bitfile", need [bitfile]):phonies
+          ("clashi", clash ["--interactive", "src/Calculator.hs"]) :
+          ("bitfile", need [bitfile]):
+          phonies
