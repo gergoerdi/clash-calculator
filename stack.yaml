@@ -1,11 +1,12 @@
-resolver: clash-1.4.2.yaml
+resolver: clash-1.4.3.yaml
 
 extra-deps:
-  - retroclash-lib
-  - retroclash-sim
-  - clash-shake
-
-  - barbies-2.0.1.0
-  - barbies-th-0.1.2
+  - barbies-th-0.1.8
+  - monoidal-containers-0.6.0.1
 
   - terminal-0.2.0.0
+
+  - retroclash-lib-0.1.0
+  - retroclash-sim-0.1.0
+  - clash-shake-0.1.0
+  - clashilator-0.1.0
