@@ -2,7 +2,6 @@ module Calculator.ALU where
 
 import Clash.Prelude hiding ((^))
 import Prelude ((^))
-import Test.QuickCheck
 
 type Digit = Index 10
 type BCD n = Vec n Digit

@@ -2,11 +2,11 @@ module Calculator.IO where
 
 import Clash.Prelude
 import Calculator.State
+import Calculator.Keypad (Hex, keyToCmd)
 import System.Terminal
 import Control.Monad ((<=<))
 import Control.Monad.Extra (loopM)
 import Data.Char (digitToInt)
-import Calculator (Hex, keyToCmd)
 
 eventToCmd :: Event -> Maybe Cmd
 eventToCmd (KeyEvent key mod) | mod == mempty = case key of

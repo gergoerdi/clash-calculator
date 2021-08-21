@@ -1,10 +1,10 @@
 name:                clash-calculator
 version:             0.1.0
-category:            hardware, game
+category:            Hardware
 license:             MIT
 author:              Gergő Érdi
 maintainer:          gergo@erdi.hu
-copyright:           2020 Gergő Érdi
+copyright:           2021 Gergő Érdi
 
 dependencies:
   - base
@@ -65,3 +65,7 @@ default-extensions:
 executables:
   calculator:
     main: Calculator.IO
+    other-modules:
+      - Calculator.ALU
+      - Calculator.State
+      - Calculator.Keypad
