@@ -8,5 +8,5 @@ extra-deps:
 
   - retroclash-lib-0.1.0
   - retroclash-sim-0.1.0
-  - clash-shake-0.1.0
+  - clash-shake-0.2.0
   - clashilator-0.1.0
